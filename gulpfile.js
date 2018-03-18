@@ -1,19 +1,19 @@
-var gulp = require('gulp'),
+let gulp = require('gulp'),
     browserSync = require('browser-sync'),
     concat = require('gulp-concat'),
     rename = require('gulp-rename'),
     uglify = require('gulp-uglify');
 
-var reload = browserSync.reload;
+let reload = browserSync.reload;
 
-var paths = {
+let paths = {
     html: {
         in: ['src/**/*.html'],
-        out: 'dest/'
+        out: 'dist/'
     },
     js: {
         in: 'src/js/**/*.js',
-        out: 'dest/js/'
+        out: 'dist/js/'
     }
 };
 
@@ -31,7 +31,6 @@ gulp.task('scripts', function () {
         .pipe(concat('app.js'))
         .pipe(gulp.dest(paths.js.out))
         .pipe(rename('app.min.js'))
-        .pipe(uglify())
         .pipe(gulp.dest(paths.js.out))
         .pipe(reload({stream: true}));
 });
