@@ -6,12 +6,12 @@ let bunny = PIXI.Sprite.fromImage('assets/bunny.png');
 let direction = 1;
 let velocity = {
     x: 0,
-    y: 0,
-    rotation: 0
+    y: 0
 };
 
 const maxVel = 5,
-    maxAngle = 1;
+    maxAngle = 1,
+    gravity = 1;
 
 // center the sprite's anchor point
 bunny.anchor.set(0.5);
@@ -36,27 +36,19 @@ app.ticker.add(function(delta) {
     if (bunny.rotation < maxAngle && direction > 0 || bunny.rotation > -maxAngle && direction < 0) {
         bunny.rotation += (0.08) * direction * delta;
         if (velocity.y < maxVel) {
-            velocity.y += 0.08 * (1.2 - Math.abs(bunny.rotation)) * delta;
+            velocity.y += gravity * 0.08 * (1.2 - Math.abs(bunny.rotation)) * delta;
         }
-        velocity.rotation += 0.005 * delta;
-
     } else {
-        velocity.y = 0;
-        velocity.rotation = 0;
+        velocity.y = gravity;
     }
 
-    bunny.x += (bunny.rotation + velocity.x) * delta;
-    bunny.y -= (1 + velocity.y) * delta;
+    bunny.x += velocity.x * delta;
+    bunny.y -= velocity.y * delta;
 
     if (velocity.x < maxVel && bunny.rotation > 0 || velocity.x > -maxVel && bunny.rotation < 0) {
         velocity.x += 0.08 * bunny.rotation * delta;
     }
-    if (velocity.rotation < 1
-        || velocity.rotation > -1) {
 
-    } else {
-
-    }
 });
 
 window.addEventListener('click', function () {
